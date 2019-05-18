@@ -1,0 +1,11 @@
+* {
+    text-align: center;
+}
+
+.choice, .answer-text {
+    display: inline;
+}
+
+.progress {
+    padding: 20px;
+}
