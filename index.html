@@ -3,24 +3,36 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>repl.it</title>
+    <title>Harry Potter Quiz App</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <div class="score">Score</div>
-    <h1 class="question">Question</h1>
+    <div class="score">0 points</div>
+    <h1 class="question">What is the name of Ron Weasley’s pet rat?</h1>
 
     <form class="answers">
-        <input class="choice" type="radio" name="answer" value="A"><div class="answer-text">first answer</div>
-        <input class="choice" type="radio" name="answer" value="B"><div class="answer-text">second answer</div>
-        <input class="choice" type="radio" name="answer" value="C"><div class="answer-text">third answer</div>
-        <input class="choice" type="radio" name="answer" value="D"><div class="answer-text">fourth answer</div>
-    
-        <button type="submit">Submit</button>
+      <div class="wholeAnswer">
+        <input class="choice answerA" type="radio" name="answer" id="A" value="Peter">
+        <label class="answerA answerText" for="A">Peter</label>
+      </div>
+      <div class="wholeAnswer">
+        <input class="choice answerB" type="radio" name="answer" id="B" value="Dobby">
+        <label class="answerB answerText" for="B">Dobby</label>
+      </div>
+      <div class="wholeAnswer">
+        <input class="choice answerC" type="radio" name="answer" id="C" value="Scabbers">
+        <label class="answerC answerText" for="C">Scabbers</label>
+      </div>
+      <div class="wholeAnswer">
+        <input class="choice answerD" type="radio" name="answer" id="D" value="Peeves">
+        <label class="answerD answerText" for="D">Peeves</label>
+      </div>
     </form>
+    
+    <button type="submit">Submit</button>
 
     
-    <div class="progress">progress</div>
+    <div class="progress">Question 1 of 10</div>
 
     <script
   src="https://code.jquery.com/jquery-3.4.1.js"

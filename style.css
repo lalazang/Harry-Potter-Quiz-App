@@ -2,10 +2,20 @@
     text-align: center;
 }
 
-.choice, .answer-text {
-    display: inline;
+.score {
+    padding: 10px;
+}
+
+.answers {
+    width: 100px;
+    padding: 30px;
+    margin: 0 auto;
+}
+
+.wholeAnswer {
+    text-align: left;
 }
 
 .progress {
-    padding: 20px;
+    padding: 30px;
 }
