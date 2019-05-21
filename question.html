@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Harry Potter Quiz App</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="score">0 points</div>
+    <h1 class="question">What is the name of Ron Weasley’s pet rat?</h1>
+
+    <form>
+      <fieldset class="answers">
+        <legend>Question 1</legend>
+          <div class="wholeAnswer">
+            <input class="choice answerA" type="radio" name="answer" id="A" value="Peter">
+            <label class="answerA answerText" for="A">Peter</label>
+          </div>
+          <div class="wholeAnswer">
+            <input class="choice answerB" type="radio" name="answer" id="B" value="Dobby">
+            <label class="answerB answerText" for="B">Dobby</label>
+          </div>
+          <div class="wholeAnswer">
+            <input class="choice answerC" type="radio" name="answer" id="C" value="Scabbers">
+            <label class="answerC answerText" for="C">Scabbers</label>
+          </div>
+          <div class="wholeAnswer">
+            <input class="choice answerD" type="radio" name="answer" id="D" value="Peeves">
+            <label class="answerD answerText" for="D">Peeves</label>
+          </div>
+      </fieldset>
+    </form>
+    
+    <button onclick="window.location.href = 'feedback.html';">Submit</button>
+
+    
+    <div class="progress">Question 1 of 10</div>
+
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
