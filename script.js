@@ -35,11 +35,7 @@ const questions = [
         question: 'Which one of these is NOT one of Voldemort’s horcruxes?',
         answers: [
             'The Sorting Hat',
-            'Tom Riddle’s Diary',
-            'Marvolo Gaunt’s Ring',
-            'Salazar Slytherin’s Locket',
             'Helga Hufflepuff’s Cup',
-            'Rowena Ravenclaw’s Diadem',
             'Nagini',
             'Harry Potter'
         ],
@@ -112,37 +108,81 @@ let questionNumber = 0;
 let score = 0;
 
 // generate QnA html (unfinished)
-function generateQnA {
-    return `<div class="score">0 points</div>
-    <h1 class="question">What is the name of Ron Weasley’s pet rat?</h1>
+function generateQnA() {
+    return `<div class="score">${score} points</div>
+    <h1 class="question">${questions[questionNumber].question}</h1>
 
     <form>
       <fieldset class="answers">
-        <legend>Question 1</legend>
+        <legend>Question ${questionNumber + 1}</legend>
           <div class="wholeAnswer">
-            <input class="choice answerA" type="radio" name="answer" id="A" value="Peter">
-            <label class="answerA answerText" for="A">Peter</label>
+            <input class="choice answerA" type="radio" name="answer" id="A" value='${questions[questionNumber].answers[0]}' required>
+            <label class="answerA answerText" for="A">${questions[questionNumber].answers[0]}</label>
           </div>
           <div class="wholeAnswer">
-            <input class="choice answerB" type="radio" name="answer" id="B" value="Dobby">
-            <label class="answerB answerText" for="B">Dobby</label>
+            <input class="choice answerB" type="radio" name="answer" id="B" value="${questions[questionNumber].answers[1]}" required>
+            <label class="answerB answerText" for="B">${questions[questionNumber].answers[1]}</label>
           </div>
           <div class="wholeAnswer">
-            <input class="choice answerC" type="radio" name="answer" id="C" value="Scabbers">
-            <label class="answerC answerText" for="C">Scabbers</label>
+            <input class="choice answerC" type="radio" name="answer" id="C" value="${questions[questionNumber].answers[2]}" required>
+            <label class="answerC answerText" for="C">${questions[questionNumber].answers[2]}</label>
           </div>
           <div class="wholeAnswer">
-            <input class="choice answerD" type="radio" name="answer" id="D" value="Peeves">
-            <label class="answerD answerText" for="D">Peeves</label>
+            <input class="choice answerD" type="radio" name="answer" id="D" value="${questions[questionNumber].answers[3]}" required>
+            <label class="answerD answerText" for="D">${questions[questionNumber].answers[3]}</label>
           </div>
+
       </fieldset>
     </form>
     
     <button onclick="window.location.href = 'feedback.html';">Submit</button>
+    <!-- <button type='submit class='submit js-submit'>Submit</button> -->
     
-    <div class="progress">Question 1 of 10</div>`
+    <div class="progress">Question ${questionNumber + 1} of 10</div>`
+}
+
+function startQuizButton() {
+    $('.js-startButton').on('click', function(event) {
+        $('.js-mainContent').html(generateQnA());
+    });
+}
+
+function submitAnswerButton() {
+    $('.js-submit').on('click', function(event) {
+        event.preventDefault();
+        let answerChoice = $('input:checked').val();
+        let correctAnswer = `${questions[questionNumber].correctAnswer}`;
+
+
+    });
+}
+
+function correctFeedback() {
+    $('.js-mainContent').html()
+
+    score++;
 
 }
+
+function incorrectFeedback() {
+
+}
+
+ function checkAnswer() {
+     if (answerChoice === correctAnswer) {
+
+     }
+ }
+
+function runQuiz() {
+
+    startQuizButton();
+    // submitAnswerButton();
+
+
+}
+
+runQuiz();
 
 // to do:
 //  - write function stubs + psuedo code
@@ -150,20 +190,17 @@ function generateQnA {
 //  - narrow down function stubs
 //  - fill out function generatQnA with the actual content
 
-
-// increment question number
-// increment score
-// start button react
-// Store questions & answers into an array (QnA) of objects
-// Possibly store answers as an array within an object
-// Store correct answer in the same (QnA) array or in a separate array
-// Have counters for the question  number and for the score
+// a radio answer must be required to submit
+// check to see if answer is correct
+// give feedback for incorrect
+// give feedback for correct and increment score
+// increment question number on next question button on either feedback page
+// when question number reaches 10 or increments to 11, then show results page
 
 // backpacking
 
 // 2-increment question number
 // 3-increment score
-// 1-Start quiz - on startQuizButton click hide start div; unhide quiz form div
 // render question in DOM
 // 4-user selects answer on submit run user feedback
 // two functions for correct and incorrect answer
@@ -176,7 +213,6 @@ function generateQnA {
 
 // Drag queen
 
-// 1-What to do when start button’s clicked
 // 4-Submit button
 // 5-Next question button
 // 6-Restart quiz button
