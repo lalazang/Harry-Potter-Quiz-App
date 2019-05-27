@@ -133,10 +133,12 @@ function generateQnA() {
           </div>
 
       </fieldset>
+      <button type='submit' class='submitAnswer js-submitAnswer'>Submit</button>
+
     </form>
     
-    <button onclick="window.location.href = 'feedback.html';">Submit</button>
-    <!-- <button type='submit class='submit js-submit'>Submit</button> -->
+    <!-- <button onclick="window.location.href = 'feedback.html';">Submit</button> -->
+    <!-- <button type='submit' class='submitAnswer js-submitAnswer'>Submit</button> -->
     
     <div class="progress">Question ${questionNumber + 1} of 10</div>`
 }
@@ -148,17 +150,18 @@ function startQuizButton() {
 }
 
 function submitAnswerButton() {
-    $('.js-submit').on('click', function(event) {
+    $('.js-submitAnswer').on('click', function(event) {
         event.preventDefault();
         let answerChoice = $('input:checked').val();
         let correctAnswer = `${questions[questionNumber].correctAnswer}`;
+        checkAnswer(answerChoice);
 
 
     });
 }
 
 function correctFeedback() {
-    $('.js-mainContent').html()
+    $('.js-mainContent').html(`yay`);
 
     score++;
 
@@ -170,14 +173,14 @@ function incorrectFeedback() {
 
  function checkAnswer() {
      if (answerChoice === correctAnswer) {
-
+         correctFeedback();
      }
  }
 
 function runQuiz() {
 
     startQuizButton();
-    // submitAnswerButton();
+    submitAnswerButton();
 
 
 }
