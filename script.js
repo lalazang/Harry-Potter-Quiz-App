@@ -106,6 +106,7 @@ const questions = [
 
 let questionNumber = 0;
 let score = 0;
+let submitButton = `<button type='submit' id='submitAnswer' class='submitAnswer js-submitAnswer'>Submit</button>`;
 
 // generate QnA html (unfinished)
 function generateQnA() {
@@ -133,7 +134,8 @@ function generateQnA() {
           </div>
 
       </fieldset>
-      <button type='submit' class='submitAnswer js-submitAnswer'>Submit</button>
+      <button type='submit' id='submitAnswer' class='submitAnswer js-submitAnswer'>Submit</button>
+    
 
     </form>
     
@@ -143,14 +145,17 @@ function generateQnA() {
     <div class="progress">Question ${questionNumber + 1} of 10</div>`
 }
 
+// when startButton is clicked, first question will fill area
 function startQuizButton() {
     $('.js-startButton').on('click', function(event) {
-        $('.js-mainContent').html(generateQnA());
+        $('.js-mainContent').remove();
+        $('.js-questionContent').html(generateQnA());
     });
 }
 
+// when asnwer is submitted, check the answer
 function submitAnswerButton() {
-    $('.js-submitAnswer').on('click', function(event) {
+    $('form').on('submit', '.js-submitAnswer', function(event) {
         event.preventDefault();
         let answerChoice = $('input:checked').val();
         let correctAnswer = `${questions[questionNumber].correctAnswer}`;
@@ -160,40 +165,90 @@ function submitAnswerButton() {
     });
 }
 
-function correctFeedback() {
-    $('.js-mainContent').html(`yay`);
-
-    score++;
-
-}
-
-function incorrectFeedback() {
-
-}
-
- function checkAnswer() {
+// if answer is correct, give correctFeeback page; if not, incorrectFeeback page
+ function checkAnswer(answerChoice) {
      if (answerChoice === correctAnswer) {
-         correctFeedback();
-     }
+         score++;
+        $('.js-mainContent').html(correctFeedback());
+    }
+    else {
+        $('.js-mainContent').html(incorrectFeedback());
+    }
  }
 
+ // generate correctFeeback page
+function correctFeedback() {
+    return `<div>${score} points</div>
+    <div>Correct!</div>
+    <h1>${questions[questionNumber].question}</h1>
+    <div>The answer is ${questions[questionNumber].correctAnswer}</div>
+
+
+    <!-- <button onclick="window.location.href = 'ending.html';">Next Question</button> -->
+    <button type='button' class='nextQuestion js-nextQuestion'>Next Question</button>
+    <div>Question ${questionNumber + 1} of 10</div>`
+}
+
+// generate incorrectFeedback page
+function incorrectFeedback() {
+    return `<div>${score} points</div>
+    <div>Incorrect</div>
+    <h1>${questions[questionNumber].question}</h1>
+    <div>The answer is ${questions[questionNumber].correctAnswer}</div>
+
+
+    <!-- <button onclick="window.location.href = 'ending.html';">Next Question</button> -->
+    <button type='button' class='nextQuestion js-nextQuestion'>Next Question</button>
+    <div>Question ${questionNumber + 1} of 10</div>`
+}
+
+// when nextQuestionButton is clicked, show next question or the results/ending page
+function nextQuestionButton() {
+    $('.js-nextQuestion').on('click', function(event) {
+        questionNumber++;
+        if (questionNumber < 10) {
+            $('.js-mainContent').html(generateQnA());
+        }
+        else {
+            $('.js-mainContent').html(generateEnding());
+        }
+    });
+}
+
+// generate ending page
+function generateEnding() {
+    return `<h1>You Finished!</h1>
+    <div>Your Score is ${score}</div>
+    <button type='button' class='restartButton'>Restart Quiz</button>`
+}
+
+// when restartQuizButton is clicked, reset question number and score, and show first question
+function restartQuizButton() {
+    $('.restartButton').on('click', function(event) {
+        questionNumber = 0;
+        score = 0;
+        $('.js-mainContent').html(generateQnA());
+    });
+}
+
+// run all necessary functions
 function runQuiz() {
 
     startQuizButton();
     submitAnswerButton();
-
+    nextQuestionButton();
+    restartQuizButton();
 
 }
 
-runQuiz();
+// when doc is ready run
+$(runQuiz);
 
 // to do:
 //  - write function stubs + psuedo code
 //  - what are the function stubs necessary?
 //  - narrow down function stubs
-//  - fill out function generatQnA with the actual content
 
-// a radio answer must be required to submit
 // check to see if answer is correct
 // give feedback for incorrect
 // give feedback for correct and increment score
