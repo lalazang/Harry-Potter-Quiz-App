@@ -209,7 +209,7 @@ function generateCorrectFeedback() {
         <img src='http://www.mugglenet.com/wp-content/uploads/2016/11/Harry-Prisoner-of-Azkaban.jpg' alt='harryOnBuckbeak'>
     </div>
     <h1>${questions[questionNumber].question}</h1>
-    <div id='corrrectStatement'>The answer is ${questions[questionNumber].correctAnswer}</div>`
+    <div id='correctStatement'>The answer is ${questions[questionNumber].correctAnswer}</div>`
     );
 
     return correctFeedback;
@@ -248,7 +248,10 @@ function nextQuestionButton() {
 // generate ending page
 function generateEnding() {
     return `<h1>Congratulations! You Finished!</h1>
-    <div>Your Score is ${score}</div>`
+    <div id='contratsGif'>
+        <img src='https://i.gifer.com/Ozbh.gif' alt='dumbledoreDancing'>
+    </div>
+    <div id='finalScoreStatement'>Your Score is ${score} out of 10 questions</div>`
 }
 
 // when restartQuizButton is clicked, reset question number and score, and show first question
