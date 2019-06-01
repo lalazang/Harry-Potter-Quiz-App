@@ -107,9 +107,9 @@ const questions = [
 let questionNumber = 0;
 let score = 0;
 let correctAnswer = 'none';
-let submitButton = $(`<button type='button' form='form1' id='submitAnswer' class='submitAnswer js-submitAnswer'>Submit</button>`);
+let submitButton = $(`<button type='submit' form='form1' id='submitAnswer' class='submitAnswer js-submitAnswer'>Submit</button>`);
 let nextQuestion = $(`<button type='button' class='nextQuestion js-nextQuestion'>Next Question</button>`);
-
+let restartButton = $(`<button type='button' class='restartButton js-restartButton'>Restart Quiz</button>`)
 
 function generateScoreLine() {
     let scoreLine = $(`<div class="score">${score} points</div>`);
@@ -128,7 +128,7 @@ function generateAnswerForm() {
       <fieldset class="answers">
         <legend>Question ${questionNumber + 1}</legend>
           <div class="wholeAnswer">
-            <input class="choice answerA" type="radio" name="answer" id="A" value='${questions[questionNumber].answers[0]}' required>
+            <input class="choice answerA" type="radio" name="answer" id="A" value='${questions[questionNumber].answers[0]}' required checked>
             <label class="answerA answerText" for="A">${questions[questionNumber].answers[0]}</label>
           </div>
           <div class="wholeAnswer">
@@ -147,8 +147,6 @@ function generateAnswerForm() {
     </form>`
     )
 
-    // answerSelection.append(submitButton);
-    
     return answerSelection;
 }
 
@@ -159,13 +157,16 @@ function progress() {
 // when startButton is clicked, first question will fill area
 function startQuizButton() {
     $('.js-startButton').on('click', function(event) {
-        // $('.js-mainContent').remove();
-        $('.js-mainContent').html(generateScoreLine());
-        $('.js-mainContent').append(generateQuestion());
-        $('.js-mainContent').append(generateAnswerForm());
-        $('.js-mainContent').append(submitButton);
-        $('.js-mainContent').append(progress());
+        startQuiz();
     });
+}
+
+function startQuiz() {
+    $('.js-mainContent').html(generateScoreLine());
+    $('.js-mainContent').append(generateQuestion());
+    $('.js-mainContent').append(generateAnswerForm());
+    $('.js-mainContent').append(submitButton);
+    $('.js-mainContent').append(progress());
 }
 
 // when answer is submitted, check the answer
@@ -177,6 +178,7 @@ function submitButtonClicked() {
         console.log(answerChoice);
         correctAnswer = `${questions[questionNumber].correctAnswer}`;
         checkAnswer(answerChoice);
+        nextQuestionButton();
     });
 }
 
@@ -205,8 +207,6 @@ function generateCorrectFeedback() {
     <div>The answer is ${questions[questionNumber].correctAnswer}</div>`
     );
 
-    // correctFeedback.append(nextQuestion);
-
     return correctFeedback;
 
 }
@@ -219,8 +219,6 @@ function generateIncorrectFeedback() {
     <h1>${questions[questionNumber].question}</h1>
     <div>The answer is ${questions[questionNumber].correctAnswer}</div>`
     );
-
-    // incorrectFeedback.append(nextQuestion);
 
     return incorrectFeedback;
 
@@ -236,9 +234,13 @@ function nextQuestionButton() {
             $('.js-mainContent').append(generateAnswerForm());
             $('.js-mainContent').append(submitButton);
             $('.js-mainContent').append(progress());
+            submitButtonClicked();
+
         }
         else {
             $('.js-mainContent').html(generateEnding());
+            $('.js-mainContent').append(restartButton);
+            restartQuizButton();
         }
     });
 }
@@ -246,16 +248,17 @@ function nextQuestionButton() {
 // generate ending page
 function generateEnding() {
     return `<h1>You Finished!</h1>
-    <div>Your Score is ${score}</div>
-    <button type='button' class='restartButton'>Restart Quiz</button>`
+    <div>Your Score is ${score}</div>`
 }
 
 // when restartQuizButton is clicked, reset question number and score, and show first question
 function restartQuizButton() {
-    $('.restartButton').on('click', function(event) {
+    $('.js-restartButton').on('click', function(event) {
+        console.log('restart button clicked');
         questionNumber = 0;
         score = 0;
-        $('.js-mainContent').html(generateQnA());
+        startQuiz();
+        submitButtonClicked();
     });
 }
 
@@ -264,50 +267,10 @@ function runQuiz() {
 
     startQuizButton();
     submitButtonClicked();
-    nextQuestionButton();
-    restartQuizButton();
+    // nextQuestionButton();
+    // restartQuizButton();
 
 }
 
 // when doc is ready run
 $(runQuiz);
-
-// to do:
-//  - write function stubs + psuedo code
-//  - what are the function stubs necessary?
-//  - narrow down function stubs
-
-// check to see if answer is correct
-// give feedback for incorrect
-// give feedback for correct and increment score
-// increment question number on next question button on either feedback page
-// when question number reaches 10 or increments to 11, then show results page
-
-// backpacking
-
-// 2-increment question number
-// 3-increment score
-// render question in DOM
-// 4-user selects answer on submit run user feedback
-// two functions for correct and incorrect answer
-// two functions that may be executed in either case (user feedback for correct/incorrect answer)
-// update score text
-// 7-render results - when quiz is over this is the html for the page
-// 5-Next button - what happens when the user clicks next
-// 6-restart quiz function - reloads page to start quiz over
-// run quiz functions
-
-// Drag queen
-
-// 4-Submit button
-// 5-Next question button
-// 6-Restart quiz button
-// What the next question button will do
-// Check answer
-// Generate feedback if correct
-// Generate feedback if incorrect
-// 2-iterate/increment question
-// 3-iterate/increment score
-// 7-Create results page
-// Handle buttons
-
