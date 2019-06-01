@@ -111,9 +111,9 @@ let submitButton = $(`<button type='submit' form='form1' id='submitAnswer' class
 let nextQuestion = $(`<button type='button' class='nextQuestion js-nextQuestion'>Next Question</button>`);
 let restartButton = $(`<button type='button' class='restartButton js-restartButton'>Restart Quiz</button>`)
 
-function generateScoreLine() {
-    let scoreLine = $(`<div class="score">${score} points</div>`);
-    return scoreLine;
+function generateProgress() {
+    let progress = $(`<div class="progress">Question ${questionNumber + 1} of 10</div>`);
+    return progress;
 }
 
 function generateQuestion() {
@@ -150,8 +150,9 @@ function generateAnswerForm() {
     return answerSelection;
 }
 
-function progress() {
-    return $(`<div class="progress">Question ${questionNumber + 1} of 10</div>`);
+function generateScoreLine() {
+    let scoreLine = $(`<div class="score">${score} points</div>`);
+    return scoreLine;
 }
 
 // when startButton is clicked, first question will fill area
@@ -161,12 +162,13 @@ function startQuizButton() {
     });
 }
 
+// fill up the question page
 function startQuiz() {
-    $('.js-mainContent').html(generateScoreLine());
+    $('.js-mainContent').html(generateProgress());
     $('.js-mainContent').append(generateQuestion());
     $('.js-mainContent').append(generateAnswerForm());
     $('.js-mainContent').append(submitButton);
-    $('.js-mainContent').append(progress());
+    $('.js-mainContent').append(generateScoreLine());
 }
 
 // when answer is submitted, check the answer
@@ -175,7 +177,7 @@ function submitButtonClicked() {
         event.preventDefault();
         console.log('submit button listened');
         let answerChoice = $('input:checked').val();
-        console.log(answerChoice);
+        console.log('answer chosen: ' + answerChoice);
         correctAnswer = `${questions[questionNumber].correctAnswer}`;
         checkAnswer(answerChoice);
         nextQuestionButton();
@@ -186,42 +188,45 @@ function submitButtonClicked() {
  function checkAnswer(answerChoice) {
      if (answerChoice === correctAnswer) {
          score++;
-        $('.js-mainContent').html(generateCorrectFeedback());
-        $('.js-mainContent').append(nextQuestion);
-        $('.js-mainContent').append(progress());
+         $('.js-mainContent').html(generateProgress());
+         $('.js-mainContent').append(generateCorrectFeedback());
+         $('.js-mainContent').append(nextQuestion);
+         $('.js-mainContent').append(generateScoreLine());
     }
     else {
-        $('.js-mainContent').html(generateIncorrectFeedback());
+        $('.js-mainContent').html(generateProgress());
+        $('.js-mainContent').append(generateIncorrectFeedback());
         $('.js-mainContent').append(nextQuestion);
-        $('.js-mainContent').append(progress());
+        $('.js-mainContent').append(generateScoreLine());
     }
  }
-
 
  // generate correctFeeback page
 function generateCorrectFeedback() {
     let correctFeedback = $(
-    `<div>${score} points</div>
-    <div>Correct!</div>
+    `<div>Correct!</div>
+    <div id='correctImg'>
+        <img src='http://www.mugglenet.com/wp-content/uploads/2016/11/Harry-Prisoner-of-Azkaban.jpg' alt='harryOnBuckbeak'>
+    </div>
     <h1>${questions[questionNumber].question}</h1>
-    <div>The answer is ${questions[questionNumber].correctAnswer}</div>`
+    <div id='corrrectStatement'>The answer is ${questions[questionNumber].correctAnswer}</div>`
     );
 
     return correctFeedback;
-
 }
 
 // generate incorrectFeedback page
 function generateIncorrectFeedback() {
     let incorrectFeedback = $(
-    `<div>${score} points</div>
-    <div>Incorrect</div>
+    `<div>Incorrect</div>
+    <div id='incorrectImg'>
+        <img src='https://vignette.wikia.nocookie.net/harrypotter/images/e/ed/Tea_leaves_1.jpg' alt='grimTeaLeaves'>
+    </div>
     <h1>${questions[questionNumber].question}</h1>
-    <div>The answer is ${questions[questionNumber].correctAnswer}</div>`
+    <div id='correctStatement'>The answer is ${questions[questionNumber].correctAnswer}</div>`
     );
 
     return incorrectFeedback;
-
 }
 
 // when nextQuestionButton is clicked, show next question or the results/ending page
@@ -229,13 +234,8 @@ function nextQuestionButton() {
     nextQuestion.on('click', function(event) {
         questionNumber++;
         if (questionNumber < 10) {
-            $('.js-mainContent').html(generateScoreLine());
-            $('.js-mainContent').append(generateQuestion());
-            $('.js-mainContent').append(generateAnswerForm());
-            $('.js-mainContent').append(submitButton);
-            $('.js-mainContent').append(progress());
+            startQuiz();
             submitButtonClicked();
-
         }
         else {
             $('.js-mainContent').html(generateEnding());
@@ -247,7 +247,7 @@ function nextQuestionButton() {
 
 // generate ending page
 function generateEnding() {
-    return `<h1>You Finished!</h1>
+    return `<h1>Congratulations! You Finished!</h1>
     <div>Your Score is ${score}</div>`
 }
 
@@ -264,12 +264,8 @@ function restartQuizButton() {
 
 // run all necessary functions
 function runQuiz() {
-
     startQuizButton();
     submitButtonClicked();
-    // nextQuestionButton();
-    // restartQuizButton();
-
 }
 
 // when doc is ready run
