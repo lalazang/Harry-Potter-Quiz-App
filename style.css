@@ -3,7 +3,8 @@
     box-sizing: border-box;
     background-color: peachpuff;
     color: black;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'PT Serif', serif;
+    font-size: 16px;
 
 }
 
@@ -18,6 +19,7 @@ button {
 
 .progress {
     padding: 30px;
+    font-size: 18px;
 }
 
 h1 {
@@ -37,7 +39,6 @@ h1 {
 
 .wholeAnswer {
     text-align: left;
-    font-size: 15px;
 }
 
 .answerText {
@@ -54,23 +55,21 @@ button {
     border-radius: 10%;
     font-weight: bold;
     color: white;
-    font-size: 15px;
 }
 
 .submitAnswer, .startButton {
     width: 100px;
-    height: 30px;
+    height: 33px;
 }
 
-.nextQuestion {
-    width: 100px;
-    height: 60px;
+.nextQuestion, .restartButton {
+    width: 160px;
+    height: 33px;
 }
 
 
 #correctStatement {
     padding: 20px;
-    font-size: 16px;
 }
 
 #correctImg img, #incorrectImg img {
@@ -83,5 +82,6 @@ button {
 }
 
 #finalScoreStatement {
+    font-size: 20px;
     padding: 20px;
 }
